@@ -1,0 +1,11 @@
+language: node_js
+node_js: 
+  - "10.9.0"
+jobs:
+  include:
+    - stage: Backend test
+      script: 
+        - cd backend 
+        - yarn install
+        - yarn coverage
+      after_script: yarn coveralls
