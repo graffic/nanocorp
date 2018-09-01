@@ -1,0 +1,2 @@
+# Nanos.ai assignment
+[![Build Status](https://travis-ci.org/graffic/nanocorp.svg?branch=master)](https://travis-ci.org/graffic/nanocorp) [![Coverage Status](https://coveralls.io/repos/github/graffic/nanocorp/badge.svg?branch=master)](https://coveralls.io/github/graffic/nanocorp?branch=master)
