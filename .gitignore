@@ -1,5 +1,11 @@
 # Node environment
 .env/
 node_modules
+yarn-error.log
+
+# Node coverage
 coverage
 .nyc_output
+
+# VS Code
+.vscode
