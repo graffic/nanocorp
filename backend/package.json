@@ -9,14 +9,18 @@
     "start": "node ./src/index.js",
     "test": "standard && mocha",
     "test:all_coverage": "standard && nyc --reporter=lcov --reporter=text mocha",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cd .. && cat ./backend/coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "apollo-server-koa": "^2.0.4",
     "graphql": "^14.0.0",
-    "koa": "^2.5.2"
+    "koa": "^2.5.2",
+    "koa-conditional-get": "^2.0.0",
+    "koa-etag": "^3.0.0",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.2",
     "graphql-request": "^1.8.2",
