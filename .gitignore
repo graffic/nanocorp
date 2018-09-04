@@ -1,3 +1,6 @@
+# vim
+*.swp
+
 # Node environment
 .env/
 node_modules
