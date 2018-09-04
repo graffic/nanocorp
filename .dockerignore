@@ -1,0 +1,6 @@
+**
+!backend/package.json
+!backend/yarn.lock
+!backend/src
+!frontend/dist
+!db/data.json

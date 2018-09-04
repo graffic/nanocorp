@@ -1,20 +1,30 @@
 language: node_js
-
-node_js: 
-- "10.9.0"
-
+env:
+  global:
+  - secure: MhlO5xovg1DvjkxvqTD75yju6kW5hOhZcu8WmMYDJ49GgXk8ij/KVoxlqv552mlgRp510PrinVc+SweWtJwXZPjpbsEfdsdTUEMTo1KVJcHk0CuCxGGSPVXOscqNUzj6SCS4dGuECYBH4xqIvlRrIOTgPCuRF9ZxQ/0noR9XSaXvLIznUGYAl/8l3disNTX/7Gm0PdDS12HTa9xbiDG/WYFO8FZsvVoeUis6sourHn9QUlKSu3CBwlszQb/2KWByVDgoWAlwcXU36djrRMRTRUOxmotqt6NzZKbheNuFHaz3I67gv1vNcdylAucVVJ0i/aXlQsmulTxkqa7IWR0eC4p0r6oy9u+FJ1dm5iLcJO8/E/xxjGYBeGMSY/mgoeCk2Z6gufdUHfxvFgToFncATEifybJXITC5Sw/eHc7ZBx9kV+cwo+ijzWKGFVweWDZV3QJp7LnHqFwNPO4fuwtGBUO2jKi+KM1p6lR0VyRY/bfYqmD3uPVT6JV8luL3gPis319rBuKu3N5lNbfAntz03/rO1UYiw8Rm4JP1+WRXJWf2gvGi1fy/QjeexUkm0BMjnGIJf7gdGSFigpdUeds0fVosl6Tn2/KQR8Pr9CSSUCIsJu4nxueK+YasikXjCObxctV3rRuSa17+9APRuQXDDkXTxu6Mw6yg4HQjlH4OK/g=
+  - secure: BYyOQjkpwHukROYCxU7H2xYbF7M0xT8UI7XoWGjJ2TSBwo9xttx2kVuBmbCMGL1Qzv0pCGMaEla0AABzoc9GviN0vyzZbZepBVh2WFYNxVTXfNeMRLrxCIV6My5xqHYZBTadlPdjdq7iAb4u8uKFDCI8MOAHdmJiJmm9rn+AMsyzXk5xbmB1pw2LysegQcDs9Hh3w9r4KltsRadnAP3rXmY2ZIWurpdUGEOLORoABuw6wtkNRYRotgDhwOvjPTE3SEx4j7w2x5ZB2M9+gv2Fnb7zWI/GNTTqB9lLJlTnWUHFRqBpW5NkfN+MZ+fV36/T3uMn70nWH6jfE3kTOULen9Y+/ZJ4NcIt/Esf6QfrkpxFbJ83j4iSlcRd+NsuM1shgsy0Yjb2ehc9WHevOQ0bWJY3N0dH9S7bgPuZNHGyE2kB/TF1PU9yfCkY/4x5EhX+T0V3HHfwTDa7JtNNUc0/TdUSN1oxk6ZqToP2iK4EJaLymikTrOspjGOQVY1QuR3Pk4vz7zITjTrfSp8CBZeZ7H6/mYeZx9k9cRJj1mVq8rLWJ5sfeM/VSKyX6U7LFm7BId8wG4ksfYAsdgLRxCXap7R5YhtRNW57RdLpaXgdZAny0KG2zN1GuuYUImsYH7ghkxEy76rvgONnX3BEHhsA/omOmGszC5C/jf7F2qEBhjI=
+node_js:
+- 10.9.0
 jobs:
   include:
-  - stage: Backend tests
-    script: 
-    - cd backend 
-    - yarn 
-    - yarn test:all_coverage
-    after_script: yarn coveralls
-  - stage: Frontend tests
+  - stage: tests
+    install: cd backend && yarn
+    script: yarn test:all_coverage
+    after_success: yarn coveralls
+  - install: cd frontend && yarn
+    script: yarn test:all_coverage
+    after_success: yarn coveralls
+  - stage: build
+    services:
+    - docker
+    env:
+    - TAG=graffic/nanocorp:latest
     script:
-    - cd frontend
-    - yarn
-    - yarn test:all_coverage
-    after_script: yarn coveralls
-
+    - cd frontend && yarn && yarn build && cd ..
+    - docker build -t $TAG .
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker push $TAG
+stages:
+- tests
+- name: build
+  if: branch = master
