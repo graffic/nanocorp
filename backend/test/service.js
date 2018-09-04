@@ -49,5 +49,11 @@ describe('Whole service tests', () => {
     expect(response.data).to.be.equal('eggs')
   })
 
+  it('Serves index.html on not found', async () => {
+    const axios = require('axios')
+    const response = await axios.get(`${appAddress()}/ladened/swallow`)
+    expect(response.data).to.be.equal('spam')
+  })
+
   after((done) => server.close(done))
 })

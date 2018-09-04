@@ -7,6 +7,12 @@ module.exports = {
   applyMiddleware (app) {
     app.use(conditional())
     app.use(etag())
-    app.use(staticFiles(config.staticPath, {}))
+    const staticMiddleware = staticFiles(config.staticPath, {})
+    app.use(staticMiddleware)
+    // Fallback to / (index.html) in case static cannot find the file
+    app.use(async (ctx, next) => {
+      ctx.path = '/'
+      await staticMiddleware(ctx, next)
+    })
   }
 }
