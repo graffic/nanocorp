@@ -1,13 +1,11 @@
 language: node_js
-
 env:
   global:
   - secure: MhlO5xovg1DvjkxvqTD75yju6kW5hOhZcu8WmMYDJ49GgXk8ij/KVoxlqv552mlgRp510PrinVc+SweWtJwXZPjpbsEfdsdTUEMTo1KVJcHk0CuCxGGSPVXOscqNUzj6SCS4dGuECYBH4xqIvlRrIOTgPCuRF9ZxQ/0noR9XSaXvLIznUGYAl/8l3disNTX/7Gm0PdDS12HTa9xbiDG/WYFO8FZsvVoeUis6sourHn9QUlKSu3CBwlszQb/2KWByVDgoWAlwcXU36djrRMRTRUOxmotqt6NzZKbheNuFHaz3I67gv1vNcdylAucVVJ0i/aXlQsmulTxkqa7IWR0eC4p0r6oy9u+FJ1dm5iLcJO8/E/xxjGYBeGMSY/mgoeCk2Z6gufdUHfxvFgToFncATEifybJXITC5Sw/eHc7ZBx9kV+cwo+ijzWKGFVweWDZV3QJp7LnHqFwNPO4fuwtGBUO2jKi+KM1p6lR0VyRY/bfYqmD3uPVT6JV8luL3gPis319rBuKu3N5lNbfAntz03/rO1UYiw8Rm4JP1+WRXJWf2gvGi1fy/QjeexUkm0BMjnGIJf7gdGSFigpdUeds0fVosl6Tn2/KQR8Pr9CSSUCIsJu4nxueK+YasikXjCObxctV3rRuSa17+9APRuQXDDkXTxu6Mw6yg4HQjlH4OK/g=
   - secure: BYyOQjkpwHukROYCxU7H2xYbF7M0xT8UI7XoWGjJ2TSBwo9xttx2kVuBmbCMGL1Qzv0pCGMaEla0AABzoc9GviN0vyzZbZepBVh2WFYNxVTXfNeMRLrxCIV6My5xqHYZBTadlPdjdq7iAb4u8uKFDCI8MOAHdmJiJmm9rn+AMsyzXk5xbmB1pw2LysegQcDs9Hh3w9r4KltsRadnAP3rXmY2ZIWurpdUGEOLORoABuw6wtkNRYRotgDhwOvjPTE3SEx4j7w2x5ZB2M9+gv2Fnb7zWI/GNTTqB9lLJlTnWUHFRqBpW5NkfN+MZ+fV36/T3uMn70nWH6jfE3kTOULen9Y+/ZJ4NcIt/Esf6QfrkpxFbJ83j4iSlcRd+NsuM1shgsy0Yjb2ehc9WHevOQ0bWJY3N0dH9S7bgPuZNHGyE2kB/TF1PU9yfCkY/4x5EhX+T0V3HHfwTDa7JtNNUc0/TdUSN1oxk6ZqToP2iK4EJaLymikTrOspjGOQVY1QuR3Pk4vz7zITjTrfSp8CBZeZ7H6/mYeZx9k9cRJj1mVq8rLWJ5sfeM/VSKyX6U7LFm7BId8wG4ksfYAsdgLRxCXap7R5YhtRNW57RdLpaXgdZAny0KG2zN1GuuYUImsYH7ghkxEy76rvgONnX3BEHhsA/omOmGszC5C/jf7F2qEBhjI=
-
+  - secure: HpQXsBhC9m7QtSWUHRw36qSjKjkG/nycH35ZR5EVOrwipQiy2NlbkbOSOaHxFWkPI1LzxWHZnbFhArfKJuqf8cZm+yhBGY3XaXt9HWDmMHNpjPbt6OF7vj7nIVrfsrcrb1dUWQkMJ39ZzVzJk61+MToL6wH3kkj6WttZYhbuqefn27ziT4Q9/xsKw/pTcYnYXkgTIG8sFRY9eM3Pci8LQaVpUBzOyx53587yCJ2YawpTRyr3h5v0zJ7PNiH+qJRmSqybJL1Y6dAA4ZpdW2a/3oTXDi8SKkAKqoH3CzXfHdZAJmgB6K1h7jr3q2M5qTMgNb0iB6Fqz64ih3VACnOvuaRtt5W3kmut7nm0FNu0JZuzFIU5x8sIqO1cP7WK7yhCpteHipzpWa3viC5fr85X/oDi4aIYMYp8c2v+bx9feTXGhYQAqCw5+UdydrduBvoMqPFXsRzZoyIncjrWtSc1f/7uvtf0vic9ZwVV83PiQrP0VP08nIkAZq1ADLKeC9KfOQfe5MqufUbfTej0UCnEooaVC98dfF3hYPUW5M/Xc79d8ynIzBO9YYN4FBBw3uM0He6wFVQAGufrObEpEGFgKJyYUyiK0vdlUlm8tVRl7TuSnbEgujlXEUC5aniH7/CGw3YuB646hEz/a5DU3s94KnxdLBXJJWuzYpSBsZqnplo=
 node_js:
 - 10.9.0
-
 jobs:
   include:
   - stage: tests
@@ -36,15 +34,6 @@ jobs:
     - docker build -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
-  - stage: deploy
-    env:
-    - secure: "JiDsp7uHY0/1FIKw3O6s2F2g5ybfUEoB/WifhIJ6j+YNJantB4BYVw3msn0kR+wmSEjoZer+ifMlORSJ7TObjufhWJRsUbhN49XAqFtlTMYzSWj6FT+mVBxISfkrDpDydn7IMMLv2u1mhyaHwauT7k47JJ7k1Tye+EsmuT33Vtwrg9JMvw/Js2VWxMpR4eV7R9zQGxLQ58G4Zz69lFJkFkCFY0jaRDOitJN1zANH8KsDHCu4HPxoTQHmw5iEmi1JNwibsConaAwrcv9fbBDD4viJIyNdVwfWaX83VxJFkLuR2g5DsnxkUVw3z2T5HFK6XMjn8ZHct0vnZXy5JNrM0qVaczBfdb7H6AdWSqgOE240K/EtKwbqzs8NV3Tu2fkdXEMk2mYStaCQ6tLYp3H2cai38s4YregM7i+fP+9/CcHvvYIVgZHZmD02g0h+/EYHsiSixsJJBqPFacRddWaZ7X+1RSdae0hX2mh7GQAEPejy0sb5lyphjC35uRclXAcJHtU1HcuJkuBcYRoezLTXsw372NyOl9TOXjjuMKoFKGmD5FLc9d621vkMrs/H9NZLjzzasLW4UmR40J72FUljiDp+azVwW9O1vmwDJ5kfYFt9KRsx8S+MEvvWnjPlYNjyjyKlCWhkZm7Jz2VPq+S1DmRW3B4MUjFHV+AfBcF/cuc="
-    before_install:
-    - openssl aes-256-cbc -K $encrypted_d6c310cbd15d_key -iv $encrypted_d6c310cbd15d_iv
-      -in .id_travis.enc -out ~/.ssh/id_ed25519 -d
-    - chmod 600 ~/.ssh/id_ed25519
-    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    script: ssh $DEPLOY_HOST "uname -a"
 stages:
 - tests
 - name: build
@@ -52,3 +41,8 @@ stages:
 - name: deploy
   if: branch = deploy
 
+deploy:
+  provider: script
+  script: deploy/travis-deploy.sh
+  on:
+    branch: deploy
