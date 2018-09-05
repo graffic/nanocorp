@@ -1,10 +1,10 @@
 FROM node:10.9-alpine
 
 ENV NANOCORP_BACKEND_STATIC_PATH=/app/static \
-    NANOCORP_BACKEND_PORT=4242 \
+    NANOCORP_BACKEND_PORT=8080 \
     NODE_ENV=production
 
-EXPOSE 4242
+EXPOSE 8080
 
 WORKDIR /app
 COPY backend/yarn.lock backend/package.json backend/src ./

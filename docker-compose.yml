@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    build: .
+    image: "graffic/nanocorp:app"
+    ports:
+    - "8080:8080"
+    networks:
+    - dbnet
+  db:
+    build: ./db
+    image: "graffic/nanocorp:db"
+    networks:
+    - dbnet
+networks:
+  dbnet:

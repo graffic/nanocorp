@@ -18,13 +18,26 @@ jobs:
     services:
     - docker
     env:
-    - TAG=graffic/nanocorp:latest
+    - TAG=graffic/nanocorp:app
     script:
     - cd frontend && yarn && yarn build && cd ..
     - docker build -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
+  - services:
+    - docker
+    env:
+    - TAG=graffic/nanocorp:db
+    script:
+    - cd db
+    - docker build -t $TAG .
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker push $TAG
+  - stage: deploy
+    script: deploy/travis-deploy.sh
 stages:
-- tests
+- name: tests
 - name: build
+  if: branch = master
+- name: deploy
   if: branch = master

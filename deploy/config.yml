@@ -1,0 +1,39 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: assessment-loadbalancer
+  labels:
+    app: assessment
+spec:
+  selector:
+    app: assessment
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: fullstack
+spec:
+  selector:
+    matchLabels:
+      app: assessment
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+        app: assessment
+    spec:
+      containers:
+      - name: app
+        image: graffic/nanocorp:app
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      - name: db
+        image: graffic/nanocorp:db
+        imagePullPolicy: Always
+
