@@ -23,6 +23,8 @@ gcloud --quiet components update kubectl
 
 echo "Configure kubectl..."
 gcloud auth activate-service-account --key-file travis-deploy.service-accout.json
+gcloud --quiet config set project bolibic
+gcloud --quiet config set compute/region europe-west3
 gcloud container clusters get-credentials nanocorp
 
 kubectl config current-context
