@@ -19,7 +19,6 @@ curl https://sdk.cloud.google.com | bash > /dev/null
 source $HOME/google-cloud-sdk/path.bash.inc
 gcloud --quiet version
 gcloud --quiet components update
-gcloud --quiet components beta update
 gcloud --quiet components update kubectl
 
 echo "Configure kubectl..."
