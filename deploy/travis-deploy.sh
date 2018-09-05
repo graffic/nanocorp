@@ -19,8 +19,8 @@ curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s ht
 chmod +x kubectl
 
 echo "Configure kubectl..."
-kubectl config set-cluster k8s-cluster --embed-certs=true --server=${GKE_ENDPOINT} --certificate-authority=ca.crt
-kubectl config set-credentials travis-echo --token=$(cat gke_user_token)
+kubectl config set-cluster k8s-cluster --embed-certs=true --server=${GKE_ENDPOINT} --certificate-authority=$DEPLOY_DIR/ca.crt
+kubectl config set-credentials travis-deploy --token=$(cat gke_user_token)
 kubectl config set-context travis --cluster=k8s-cluster --user=travis-deploy
 kubectl config use-context travis
 kubectl config current-context
