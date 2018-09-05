@@ -8,11 +8,9 @@ set -o nounset
 
 cd "$(cd "$(dirname "$0")"; pwd)"
 
-# Prepare k8s keys
-#echo "Prepare GKE user token..."
-#openssl aes-256-cbc -K $encrypted_d6c310cbd15d_key -iv $encrypted_d6c310cbd15d_iv -in gke_user_token.enc -out gke_user_token -d
-#echo "Prepare GKE certificate..."
-#openssl aes-256-cbc -K $encrypted_d6c310cbd15d_key -iv $encrypted_d6c310cbd15d_iv -in ca.crt.enc -d | base64 --decode > ca.crt
+echo "Prepare secrets..."
+openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_iv -in secrets.tar.enc -out secrets.tar -d
+tar xvf secrets.tar
 
 echo "Configure kubectl..."
 kubectl config set-cluster k8s-cluster --embed-certs=true --server=${GKE_ENDPOINT} --certificate-authority=ca.crt

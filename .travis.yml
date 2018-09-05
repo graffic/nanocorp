@@ -35,10 +35,6 @@ jobs:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
   - stage: deploy
-    before_script:
-    - cd deploy
-    - openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_iv -in gke_user_token.enc -out gke_user_token -d
-    - openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_iv -in ca.crt.enc -d | base64 --decode > ca.crt
     script: deploy/travis-deploy.sh
 stages:
 - name: tests
