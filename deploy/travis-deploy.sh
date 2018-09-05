@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #
-# Based on https://blog.kiloreux.me/2018/05/19/deploy-to-kubernetes-from-travis/
-
+# Based on https://medium.com/google-cloud/continuous-delivery-in-a-microservice-infrastructure-with-google-container-engine-docker-and-fb9772e81da7
 set -o pipefail
 set -o errexit
 set -o nounset
@@ -11,18 +10,22 @@ PATH=$DEPLOY_DIR:$PATH
 cd $DEPLOY_DIR
 
 echo "Prepare secrets..."
-openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_iv -in secrets.tar.enc -out secrets.tar -d
-tar xvf secrets.tar
+openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_iv -in travis-deploy.service-accout.json.enc -out travis-deploy.service-accout.json -d
 
 echo "Install kubectl..."
-curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x kubectl
+rm -rf $HOME/google-cloud-sdk
+export CLOUDSDK_CORE_DISABLE_PROMPTS=1
+curl https://sdk.cloud.google.com | bash
+source $HOME/google-cloud-sdk/path.bash.inc
+gcloud --quiet version
+gcloud --quiet components update
+gcloud --quiet components beta update
+gcloud --quiet components update kubectl
 
 echo "Configure kubectl..."
-kubectl config set-cluster k8s-cluster --embed-certs=true --server=${GKE_ENDPOINT} --certificate-authority=$DEPLOY_DIR/ca.crt
-kubectl config set-credentials travis-deploy --token=$(cat gke_user_token)
-kubectl config set-context travis --cluster=k8s-cluster --user=travis-deploy
-kubectl config use-context travis
+gcloud auth activate-service-account --key-file travis-deploy.service-accout.json
+gcloud container clusters get-credentials nanocorp
+
 kubectl config current-context
 
 echo "Deploy..."
