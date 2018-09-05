@@ -15,7 +15,7 @@ openssl aes-256-cbc -K $encrypted_4e81e2b6d12b_key -iv $encrypted_4e81e2b6d12b_i
 echo "Install kubectl..."
 rm -rf $HOME/google-cloud-sdk
 export CLOUDSDK_CORE_DISABLE_PROMPTS=1
-curl https://sdk.cloud.google.com | bash
+curl https://sdk.cloud.google.com | bash > /dev/null
 source $HOME/google-cloud-sdk/path.bash.inc
 gcloud --quiet version
 gcloud --quiet components update
