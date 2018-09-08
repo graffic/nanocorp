@@ -32,3 +32,13 @@ kubectl config current-context
 
 echo "Deploy..."
 kubectl apply -f config.yml
+# Forces redeploy due to using the same tag
+printf '{"spec":{"template":{"metadata":{"labels":{"date":"%s"}}}}}' `date +%s` \
+    | xargs -0 kubectl patch deployment fullstack -p
+
+echo "Purge cloudflare cache..."
+curl -X POST "https://api.cloudflare.com/client/v4/zones/e8fc71f3124b939d9818c7cd366c4967/purge_cache" \
+     -H "X-Auth-Email: $CLOUDFLARE_AUTH_EMAIL" \
+     -H "X-Auth-Key: $CLOUDFLARE_AUTH_KEY" \
+     -H "Content-Type: application/json" \
+     --data '{"purge_everything":true}'
