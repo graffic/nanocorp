@@ -2,5 +2,9 @@
 !backend/package.json
 !backend/yarn.lock
 !backend/src
-!frontend/dist
+!frontend/src
+!frontend/package.json
+!frontend/yarn.lock
+!frontend/webpack.config.js
+!frontend/.babelrc
 !db/data.json

@@ -1,15 +1,19 @@
 version: "3"
 services:
   app:
-    build: .
-    image: "graffic/nanocorp:app"
+    build:
+      context: ./
+      args:
+        NANOCORP_FRONTEND_API_URL: /graphql
+    image: "nanocorp_app"
+
     ports:
     - "8080:8080"
     networks:
     - dbnet
   db:
     build: ./db
-    image: "graffic/nanocorp:db"
+    image: "nanocorp_db"
     networks:
     - dbnet
 networks:

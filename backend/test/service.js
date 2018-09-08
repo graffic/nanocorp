@@ -1,7 +1,11 @@
+/**
+ * @module
+ * Service tests. Test the entire service.
+ */
 process.env['NANOCORP_BACKEND_STATIC_PATH'] = 'test/fixtures'
 
 const { expect } = require('chai')
-const app = require('../src')
+const app = require('../src/app')
 const { request } = require('graphql-request')
 
 describe('Whole service tests', () => {
@@ -22,12 +26,12 @@ describe('Whole service tests', () => {
     expect(campaigns).to.have.lengthOf(3)
   })
 
-  it('Query campaigns with platform', async () => {
+  it('Query campaigns with platforms', async () => {
     const { campaigns } = await request(gqlAddress(), `{
       campaigns {
         name
         platforms {
-          platform
+          type
         }
       }
     }`)
@@ -38,6 +42,18 @@ describe('Whole service tests', () => {
     const { campaign } = await request(gqlAddress(), `{
       campaign(id: 100000001) {
         name
+      }
+    }`)
+    expect(campaign.name).to.be.equal('Test Ad 1')
+  })
+
+  it('Queries one campaign with one platform', async () => {
+    const { campaign } = await request(gqlAddress(), `{
+      campaign(id: 100000001) {
+        name
+        platform(type: google) {
+          type
+        }
       }
     }`)
     expect(campaign.name).to.be.equal('Test Ad 1')

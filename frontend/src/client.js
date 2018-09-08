@@ -5,7 +5,7 @@
 import { GraphQLClient } from 'graphql-request'
 
 const client = new GraphQLClient(
-  `http://localhost:4000/graphql`
+  process.env.NANOCORP_FRONTEND_API_URL
 )
 
 export default client

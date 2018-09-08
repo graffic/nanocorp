@@ -1,14 +1,15 @@
 {
   "name": "nanocorp-backend",
   "version": "1.0.0",
-  "description": "Backend for the full stack assignment",
+  "description": "Backend for the full stack assessment",
   "main": "src/index.js",
   "author": "Javier Gonel <bolibic@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node ./src/index.js",
-    "test": "standard && mocha",
-    "test:all_coverage": "standard && nyc --reporter=lcov --reporter=text mocha",
+    "test": "mocha --recursive",
+    "test:all": "standard && mocha --recursive",
+    "test:all_coverage": "standard && nyc --reporter=lcov --reporter=text mocha --recursive",
     "coveralls": "cd .. && cat ./backend/coverage/lcov.info | coveralls"
   },
   "dependencies": {

@@ -9,6 +9,12 @@ enum Status {
   Scheduled
 }
 
+enum PlatformType {
+  facebook
+  instagram
+  google
+}
+
 "Ad campagin"
 type Campaign {
   id: Int!
@@ -17,15 +23,16 @@ type Campaign {
   total_budget: Int!
   status: Status!
   platforms: [Platform]
+  platform(type: PlatformType): Platform
 }
 
 type Platform {
-  platform: String!
+  type: PlatformType!
   status: Status!
   total_budget: Float!
   remaining_budget: Float!
-  start_date: Int!
-  end_date: Int!
+  start_date: Float!
+  end_date: Float!
   target_audiance: TargetAudience!
   creatives: Creative!
   insights: Insights!
@@ -35,8 +42,8 @@ type TargetAudience {
   languages: [Language]!
   genders: [Gender]!
   age_range:[Int]!
-  locations: [Location]!
-  interests: [String]!
+  locations: [String]!
+  interests: [String]
 }
 
 enum Language {
@@ -50,14 +57,8 @@ enum Gender {
   F
 }
 
-enum Location {
-  France
-  Germany
-  Switzerland
-}
-
 type Creative {
-  header: String!
+  headers: [String]! 
   description: String!
   url: String!
   image: String!
@@ -66,7 +67,8 @@ type Creative {
 type Insights {
   impressions: Int!
   clicks: Int!
-  nanos_score: Float!
+  nanos_score: Float
+  website_visits: Int
   cost_per_click: Float!
   click_through_rate: Float!
   advanced_kpi_1: Float!

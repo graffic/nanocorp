@@ -5,12 +5,24 @@ env:
   - secure: BYyOQjkpwHukROYCxU7H2xYbF7M0xT8UI7XoWGjJ2TSBwo9xttx2kVuBmbCMGL1Qzv0pCGMaEla0AABzoc9GviN0vyzZbZepBVh2WFYNxVTXfNeMRLrxCIV6My5xqHYZBTadlPdjdq7iAb4u8uKFDCI8MOAHdmJiJmm9rn+AMsyzXk5xbmB1pw2LysegQcDs9Hh3w9r4KltsRadnAP3rXmY2ZIWurpdUGEOLORoABuw6wtkNRYRotgDhwOvjPTE3SEx4j7w2x5ZB2M9+gv2Fnb7zWI/GNTTqB9lLJlTnWUHFRqBpW5NkfN+MZ+fV36/T3uMn70nWH6jfE3kTOULen9Y+/ZJ4NcIt/Esf6QfrkpxFbJ83j4iSlcRd+NsuM1shgsy0Yjb2ehc9WHevOQ0bWJY3N0dH9S7bgPuZNHGyE2kB/TF1PU9yfCkY/4x5EhX+T0V3HHfwTDa7JtNNUc0/TdUSN1oxk6ZqToP2iK4EJaLymikTrOspjGOQVY1QuR3Pk4vz7zITjTrfSp8CBZeZ7H6/mYeZx9k9cRJj1mVq8rLWJ5sfeM/VSKyX6U7LFm7BId8wG4ksfYAsdgLRxCXap7R5YhtRNW57RdLpaXgdZAny0KG2zN1GuuYUImsYH7ghkxEy76rvgONnX3BEHhsA/omOmGszC5C/jf7F2qEBhjI=
 node_js:
 - 10.9.0
+cache: yarn
 jobs:
   include:
+  - stage: precache
+    script: 
+    - cd backend && yarn && cd ..
+    - cd frontend && yarn && cd ..
+    - cd e2e && yarn
   - stage: tests
     install: cd backend && yarn
     script: yarn test:all_coverage
     after_success: yarn coveralls
+  - install:
+    - docker-compose build
+    - cd e2e && yarn
+    before_script: cd .. && docker-compose up -d
+    script: cd e2e && yarn cypress:run
+    after_script: cd .. && docker-compose down
   - install: cd frontend && yarn
     script: yarn test:all_coverage
     after_success: yarn coveralls
@@ -20,8 +32,7 @@ jobs:
     env:
     - TAG=graffic/nanocorp:app
     script:
-    - cd frontend && yarn && yarn build && cd ..
-    - docker build -t $TAG .
+    - docker build --build-arg NANOCORP_FRONTEND_API_URL=/graphql -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
   - services:
@@ -36,6 +47,7 @@ jobs:
   - stage: deploy
     script: deploy/travis-deploy.sh
 stages:
+- name: precache
 - name: tests
 - name: build
   if: branch = master

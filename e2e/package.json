@@ -1,0 +1,15 @@
+{
+  "name": "nanocorp-e2e-tests",
+  "version": "1.0.0",
+  "description": "End to end tests for the full stack assessment",
+  "main": "index.js",
+  "author": "Javier Gonel <bolibic@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "dependencies": {
+    "cypress": "^3.1.0"
+  }
+}
