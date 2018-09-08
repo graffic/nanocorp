@@ -34,6 +34,7 @@ jobs:
     env:
     - TAG=graffic/nanocorp:app
     script:
+    - docker pull $TAG
     - docker build --build-arg NANOCORP_FRONTEND_API_URL=/graphql -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
@@ -43,6 +44,7 @@ jobs:
     - TAG=graffic/nanocorp:db
     script:
     - cd db
+    - docker pull $TAG
     - docker build -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
