@@ -33,13 +33,15 @@ describe('Whole service tests', () => {
   it('Query campaigns with platforms', async () => {
     const { campaigns } = await request(gqlAddress(), `{
       campaigns {
+        id
         name
         platforms {
           type
         }
       }
     }`)
-    expect(campaigns[0].platforms).to.have.lengthOf(3)
+    const campaignOne = campaigns.find(c => c.id === 100000001)
+    expect(campaignOne.platforms).to.have.lengthOf(3)
   })
 
   it('Queries one campaign', async () => {
