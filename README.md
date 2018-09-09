@@ -3,7 +3,6 @@
 
 You can access the application here: https://nanos-assessment.com
 
-
 ## Introduction
 
 This application answers the [nanos.ai](http://nanos.ai) [fullstack assesment project](https://github.com/nanosapp/fullstack-dev-assesment) using JavaScript (NodeJS and browser), MongoDB and Google Cloud. At the same time it shows most of the points I consider important in an application: not only code and tests but also continuous integration and deployment using travis and google cloud.
@@ -140,7 +139,7 @@ To run the tests, it uses a compose file with the frontend, backend, and databas
 
 ## Automation and Deployment
 
-Tests and deployment are automated via [travis-ci](https://travis-ci.org/graffic/nanocorp). It runs: frontend tests, backend tests and end to end thanks to travis ability to launch other containers.
+Tests and deployment are automated via [travis-ci](https://travis-ci.org/graffic/nanocorp). It runs: frontend tests, backend tests and end to end thanks to travis ability to launch other containers. With frontend and backend tests, code coverage is generated. **IMPORTANT NOTE** the coverage percentage is for the code files that has been tested. So a file that wasn't included in tests won't event show up.
 
 After running tests, it builds two docker images: one for the backend and frontend called **app** and another one for the database called **db**. They are published on [docker hub](https://hub.docker.com/r/graffic/nanocorp/tags/)
 
@@ -154,9 +153,10 @@ On one side the containers used in e2e tests are the same dockerfiles that run i
 
 ### Infrastructure summary
 
-* Github for code
+* Github for code.
 * Travis CI for automation.
-* Docker hub as a container registry
+* Coveralls for coverage.
+* Docker hub as a container registry.
 * Google Cloud for Kubernetes.
-* Cloudflare for CDN.
+* Cloudflare for CDN and SSL.
 * GoDaddy for a cheap $1 USD domain.
