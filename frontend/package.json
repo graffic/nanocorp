@@ -12,7 +12,8 @@
     "test": "jest",
     "test:all_coverage": "standard && jest --coverage",
     "test:watch": "jest --watch",
-    "coveralls": "cd .. && cat ./frontend/coverage/lcov.info | coveralls"
+    "coveralls": "cd .. && cat ./frontend/coverage/lcov.info | coveralls",
+    "browserslist": "browserslist"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
