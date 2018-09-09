@@ -6,6 +6,7 @@ const Koa = require('koa')
 const logger = require('koa-logger')
 const { ApolloServer } = require('apollo-server-koa')
 const mongo = require('./mongo')
+const config = require('./config')
 const staticFiles = require('./static-files')
 const schema = require('./campaign')
 
@@ -21,7 +22,7 @@ module.exports = function buildApp () {
 
   const app = new Koa()
   app.use(logger())
-  app.use(mongo())
+  app.use(mongo({ url: config.mongoUrl }))
   apollo.applyMiddleware({ app })
   staticFiles.applyMiddleware(app)
 
