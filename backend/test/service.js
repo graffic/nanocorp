@@ -5,7 +5,8 @@
  * These tests require a mongo server listening on localhost:27017 with
  * the nanos_assessment database
  */
-require('../src/config').staticPath = 'test/fixtures'
+const config = require('../src/config')
+config.staticPath = config.cdnPath = 'test/fixtures'
 
 const { expect } = require('chai')
 const buildApp = require('../src/app')
@@ -75,6 +76,12 @@ describe('Whole service tests', () => {
     const axios = require('axios')
     const response = await axios.get(`${appAddress()}/ladened/swallow`)
     expect(response.data).to.be.equal('spam')
+  })
+
+  it('Serves static files on cdn path', async () => {
+    const axios = require('axios')
+    const response = await axios.get(`${appAddress()}/cdn/bacon`)
+    expect(response.data).to.be.equal('eggs')
   })
 
   after((done) => {

@@ -2,6 +2,7 @@
 !backend/package.json
 !backend/yarn.lock
 !backend/src
+!backend/cdn
 !frontend/src
 !frontend/package.json
 !frontend/yarn.lock
