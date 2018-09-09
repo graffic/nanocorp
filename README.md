@@ -6,7 +6,7 @@ You can access the application here: https://nanos-assessment.com
 
 ## Introduction
 
-This application answers the [nanos.ai](http://nanos.ai) [fullstack assesment project](https://github.com/nanosapp/fullstack-dev-assesment) using JavaScript (NodeJS and browser). At the same time it shows most of the points I consider important in an application: not only code and tests but also continuous integration and deployment using travis and google cloud.
+This application answers the [nanos.ai](http://nanos.ai) [fullstack assesment project](https://github.com/nanosapp/fullstack-dev-assesment) using JavaScript (NodeJS and browser), MongoDB and Google Cloud. At the same time it shows most of the points I consider important in an application: not only code and tests but also continuous integration and deployment using travis and google cloud.
 
 Given that I was going to give this technical assessment some time, I decided to learn also something new. I will point out during this document which parts were new and my take on them.
 
@@ -35,6 +35,8 @@ The frontend was built to consume data from the backend API. Usually in dashboar
 
 Besides React, [mobx](https://mobx.js.org) was added for state management using stores like in a [flux architecture](https://facebook.github.io/flux/) but with the benefits of observables instead of actions and dispatchers. I haven't used mobx before, and I like how it eliminates the need of `setState` and groups the access to specific domain entities.
 
+**Error handling** Is implemented only in the `platform` page using the mobx store to notify of ajax errors. Besides that, [react error boundaries](https://reactjs.org/docs/error-boundaries.html) are not implemented.
+
 For style I went with [styled components](https://www.styled-components.com). It treats css as code and isolates styles into css classes for the specific component. It is a bit weird to have the css with the code, but it feels like the first time using JSX and having HTML tags along the code. I didn't use any widget library (bootstrap, material-ui). I started using `material-ui` but it was too much to learn. I ended up adding some manual styles here and there.
 
 Packing it together with [webpack 4](https://webpack.js.org) from scratch instead of [create-react-app](https://github.com/facebook/create-react-app). I wanted to revisit webpack after two years using cli tools that obscure what is going on. Also [babel](https://babeljs.io) helped to make writing JavaScript a breeze while making the js code compatible with more browsers (check the output of `yarn browserslist`).
@@ -56,5 +58,71 @@ Last but not least:
 * Icons: [Google](https://www.flaticon.com/free-icon/search_281764), [Social media](https://www.flaticon.com/packs/social-media-2), [Question mark](https://www.flaticon.com/free-icon/question-mark-button_69464#term=unknown&page=1&position=3)
 * [Table css ideas](https://colorlib.com/wp/css3-table-templates/)
 
+## Backend
 
+The backend is a [Koa](https://koajs.com) http service with 3 main responsibilities:
+
+* Serving campaign data via a graphql API.
+* Serving the frontend in production and e2e tests.
+* Serving creatives.
+
+Those functionalities could have been splitted in different services, but for the sake of not having to many moving pieces they were left in the backend.
+
+The project is located in the `backend` directory.  Quick start (from `backend`):
+
+* Install dependencies: `yarn`
+* Run tests: `yarn test:all_coverage`
+* Run app in development mode (this needs a mongodb database): `yarn start` For the database go to the `db` folder and type `make build run`.
+
+### The GraphQL API
+
+Instead of REST I went with [GraphQL](http://graphql.github.io) using the [Apollo server](https://www.apollographql.com). I haven't used it before and since at work we build the similar dashboards with ad campaigns I wanted to compare a bit. It seems it gives more flexibility to the end-point. In this example there are only two queries, but from the start it forces you to write a schema and to ask for specific data.
+
+Documenting the endpoint is as easy as writting the schema. The Apollo graphql server provides a UI to explore the schema in development mode here: `http://localhost:4000/graphql`. Instead of using  [API blueprint](https://apiblueprint.org) or similar, the query tool allows you to play with queries.
+
+There is an option to project query fields onto mongodb queries, so we only bring the data requested from the database. In the assessment I didn't follow that path and the backend filters by campaign id only.
+
+The endpoint serves almost the same json as the one given. Here are some differences:
+
+* Platforms are given as a list with a type attribute.
+* We allow to query one platform using the platform attribute.
+* The headers in creatives are given in an array of strings.
+
+### Frontend serving
+
+Frontend static files should go somewhere. Usually an nginx or a public cloud bucket can do the trick. In the end a CDN is put in front of those files so they are requested a few times.
+
+In the assessment the backend answers to any request not in `/graphql` or `/cdn` with the frontend files. It also falls back to `index.html` when a url is not found, so react router urls work when reloading the page. [CloudFlare](https://www.cloudflare.com) is in front of the backend to cache frontend and creative files.
+
+### Serving creatives
+
+The assessment asked specifically for a solution to: serving campaign creatives. I believe those creatives shouldn't be served full size unless requested. Usually a service like [Thumbor](http://thumbor.org) will take care of resizing, caching, and with the help of a CDN publishers will be happy serving those assets.
+
+In this case I've resized the assets and the backend serves them from the `/cdn/` path. Although the frontend can be configured to grab them from somewhere else.
+
+### The web framework: Koa
+
+The good thing of koa is its simplicity. It also comes with a price: many modules doing almost the same and not being sure which one to use. The backend is using modules for graphql, serving static files, etags, conditional gets, path routing.
+
+For mongodb connections, the module I was using it wasn't very good at creating lazy connections and allowing you to close them all (useful when running the server in test mode). So I had to implement my `mongo.js` koa middleware.
+
+### Tests
+
+Most of the tests are service tests ([subcutaneous tests](https://martinfowler.com/bliki/SubcutaneousTest.html) using Martin Fowler terminology). They test the service via HTTP requests. But for some modules with specific conditions I use unit tests.
+
+## The database
+
+I was a bit lazy in this one. I literally dumped the json given into a mongo db and indexed it by `id`. **With mongo** It was easy to import the data, it gives back the data in a format suitable for the API.
+
+You can run the database from the `db` directory. Type `make build run` and it will build an standalone container and run it listening on port `27017`
+
+## End to end tests
+
+Instead of going with Selenium/Webdriver. This time I'm giving Cypress a try. I've found their development ui very helpful writting UI selectors. 
+
+To run the tests, it uses a compose file with the frontend, backend, and database. Steps
+1. In the project root directory run: `docker-compose up --build`
+2. In another terminal (unless you use `-d` in docker compose), go to the `e2e` directory
+3. Install dependencies with `yarn`
+4. Run tests: `yarn cypress:run`
 
