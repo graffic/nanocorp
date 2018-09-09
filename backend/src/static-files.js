@@ -1,3 +1,7 @@
+/**
+ * @module
+ * Sets up the serving of frontend static files(js, css,...)
+ */
 const conditional = require('koa-conditional-get')
 const etag = require('koa-etag')
 const staticFiles = require('koa-static')

@@ -10,5 +10,6 @@ const env = new (require('./environment'))(ENV_PREFIX)
 
 module.exports = {
   port: env.getInt('PORT', 4000),
-  staticPath: env.getString('STATIC_PATH', '../frontend/dist/')
+  staticPath: env.getString('STATIC_PATH', '../frontend/dist/'),
+  mongoDb: 'nanos_assessment'
 }

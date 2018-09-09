@@ -16,7 +16,11 @@ jobs:
     - cd frontend && yarn && cd ..
     - cd e2e && yarn
   - stage: tests
-    install: cd backend && yarn
+    services:
+    - mongodb
+    install: 
+    - mongoimport --db nanos_assessment --collection campaigns --jsonArray --drop --file db/data.json
+    - cd backend && yarn
     script: yarn test:all_coverage
     after_success: yarn coveralls
   - install:

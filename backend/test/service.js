@@ -1,16 +1,20 @@
 /**
  * @module
  * Service tests. Test the entire service.
+ *
+ * These tests require a mongo server listening on localhost:27017 with
+ * the nanos_assessment database
  */
-process.env['NANOCORP_BACKEND_STATIC_PATH'] = 'test/fixtures'
+require('../src/config').staticPath = 'test/fixtures'
 
 const { expect } = require('chai')
-const app = require('../src/app')
+const buildApp = require('../src/app')
 const { request } = require('graphql-request')
 
 describe('Whole service tests', () => {
-  let server
+  let server, app
   before((done) => {
+    app = buildApp()
     server = app.listen(null, done)
   })
 
@@ -71,5 +75,11 @@ describe('Whole service tests', () => {
     expect(response.data).to.be.equal('spam')
   })
 
-  after((done) => server.close(done))
+  after((done) => {
+    server.close(() => {
+      app.middleware.find(({ name }) => name === 'koaMongo')
+        .shutdown()
+        .then(() => done())
+    })
+  })
 })

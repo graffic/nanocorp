@@ -1,14 +1,29 @@
+/**
+ * @module
+ * Creates a KOA app with the right middleware
+ */
 const Koa = require('koa')
 const logger = require('koa-logger')
 const { ApolloServer } = require('apollo-server-koa')
+const mongo = require('./mongo')
 const staticFiles = require('./static-files')
 const schema = require('./campaign')
 
-const apollo = new ApolloServer({ schema })
+/**
+ * Builds the assessment koa app with middlewares
+ * @return {Koa} The koa app
+ */
+module.exports = function buildApp () {
+  const apollo = new ApolloServer({
+    schema,
+    context: ({ ctx }) => ctx
+  })
 
-const app = new Koa()
-app.use(logger())
-apollo.applyMiddleware({ app })
-staticFiles.applyMiddleware(app)
+  const app = new Koa()
+  app.use(logger())
+  app.use(mongo())
+  apollo.applyMiddleware({ app })
+  staticFiles.applyMiddleware(app)
 
-module.exports = app
+  return app
+}

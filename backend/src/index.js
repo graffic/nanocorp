@@ -1,9 +1,11 @@
+/**
+ * Run the app via CLI
+ */
 const config = require('./config')
-const log = require('./log')
-const app = require('./app')
+const buildApp = require('./app')
 
 if (require.main === module) {
-  const server = app.listen(config.port, () =>
-    log.info(`🚀 Server ready at http://localhost:${server.address().port}`)
+  const server = buildApp().listen(config.port, () =>
+    console.info(`🚀 Server ready at http://localhost:${server.address().port}`)
   )
 }

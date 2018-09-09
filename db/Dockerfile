@@ -12,11 +12,12 @@ RUN set -ex && \
     chown mongodb:mongodb /data/db && \
     (su -s /bin/sh -c mongod mongodb &) && \
     sleep 2 && \
-    mongoimport --db ${MONGO_DB} --collection polls --jsonArray --drop --file /data.json && \
+    mongoimport --db ${MONGO_DB} --collection campaigns --jsonArray --drop --file /data.json && \
     mongo ${MONGO_DB} /indexes.js && \
     mongod --shutdown && \
     apk del mongodb-tools && \ 
     rm -rf /var/cache/apk/*
 
 EXPOSE 27017
-CMD su -s /bin/sh -c mongod mongodb
+USER mongodb
+CMD mongod --bind_ip 0.0.0.0

@@ -1,4 +1,7 @@
-// Construct a schema, using GraphQL schema language
+/**
+ * @module
+ * GraphQL full schema
+ */
 const { gql } = require('apollo-server-core')
 
 const types = gql`
