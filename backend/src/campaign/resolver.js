@@ -16,7 +16,7 @@ const campaigns = async ({ getMongoConnection }) =>
 module.exports = {
   Query: {
     campaigns: async (_, _args, ctx) =>
-      (await campaigns(ctx)).find().toArray(),
+      (await campaigns(ctx)).find().sort({ id: 1 }).toArray(),
     campaign: async (_, { id: givenId }, ctx) =>
       (await campaigns(ctx)).findOne({ id: givenId })
   },
