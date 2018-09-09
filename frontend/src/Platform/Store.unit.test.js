@@ -7,20 +7,23 @@ beforeEach(() => {
   jest.resetModules()
 })
 
-test('get campaigns', async () => {
+test('get platform from campaign', async () => {
   client.request.mockReturnValueOnce(Promise.resolve({
-    campaigns: [{}, {}]
+    campaign: { platform: 'spam' }
   }))
 
   const store = new Store()
-  await store.get()
-  expect(store.campaigns).toEqual([{}, {}])
+  expect(store.hasData).toEqual(false)
+
+  await store.get(1, 'facebook')
+  expect(store.platform).toEqual('spam')
+  expect(store.hasData).toEqual(true)
 })
 
 test('failure getting campaigns', async () => {
   client.request.mockRejectedValue(new Error())
 
   const store = new Store()
-  await store.get()
+  await store.get(42, 42)
   expect(store.error).toEqual(true)
 })

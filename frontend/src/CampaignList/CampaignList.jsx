@@ -7,8 +7,6 @@ import styled from 'styled-components'
 
 const Table = styled.table`
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
@@ -54,12 +52,15 @@ class CampaignList extends Component {
 
   render () {
     return (
-      <Table>
-        <Header />
-        <tbody>
-          {store.campaigns.map((c) => <CampaignItem key={c.id} campaign={c} />)}
-        </tbody>
-      </Table>
+      <>
+        <h1>Campaign List</h1>
+        <Table>
+          <Header />
+          <tbody>
+            {store.campaigns.map((c) => <CampaignItem key={c.id} campaign={c} />)}
+          </tbody>
+        </Table>
+      </>
     )
   }
 }

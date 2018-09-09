@@ -39,7 +39,7 @@ jobs:
     - TAG=graffic/nanocorp:app
     script:
     - docker pull $TAG
-    - docker build --build-arg NANOCORP_FRONTEND_API_URL=/graphql -t $TAG .
+    - docker build --build-arg NANOCORP_FRONTEND_API_URL=/graphql --build-arg NANOCORP_FRONTEND_CDN=/cdn/ -t $TAG .
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker push $TAG
   - services:

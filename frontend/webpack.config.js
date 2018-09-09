@@ -55,7 +55,8 @@ module.exports = {
       filename: './index.html'
     }),
     new EnvironmentPlugin({
-      NANOCORP_FRONTEND_API_URL: 'http://localhost:4000/graphql'
+      NANOCORP_FRONTEND_API_URL: 'http://localhost:4000/graphql',
+      NANOCORP_FRONTEND_CDN: 'http://localhost:4000/cdn/'
     })
   ],
   optimization: {

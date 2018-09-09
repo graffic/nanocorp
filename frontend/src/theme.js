@@ -1,6 +1,8 @@
 /**
  * @module
  * Application style theme variables
+ *
+ * Colors and font.
  */
 const theme = {
   fontFamily: 'Roboto',

@@ -7,6 +7,7 @@ const logger = require('koa-logger')
 const { ApolloServer } = require('apollo-server-koa')
 const mongo = require('./mongo')
 const config = require('./config')
+const cdn = require('./cdn')
 const staticFiles = require('./static-files')
 const schema = require('./campaign')
 
@@ -24,6 +25,7 @@ module.exports = function buildApp () {
   app.use(logger())
   app.use(mongo({ url: config.mongoUrl }))
   apollo.applyMiddleware({ app })
+  cdn.applyMiddleware(app)
   staticFiles.applyMiddleware(app)
 
   return app

@@ -11,7 +11,7 @@ module.exports = {
   applyMiddleware (app) {
     app.use(conditional())
     app.use(etag())
-    const staticMiddleware = staticFiles(config.staticPath, {})
+    const staticMiddleware = staticFiles(config.staticPath, { maxage: 86400 })
     app.use(staticMiddleware)
     // Fallback to / (index.html) in case static cannot find the file
     app.use(async (ctx, next) => {

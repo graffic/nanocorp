@@ -5,6 +5,7 @@ services:
       context: ./
       args:
         NANOCORP_FRONTEND_API_URL: /graphql
+        NANOCORP_FRONTEND_CDN: /cdn/
     image: "nanocorp_app"
     environment:
     - NANOCORP_BACKEND_MONGO_URL=mongodb://db:27017

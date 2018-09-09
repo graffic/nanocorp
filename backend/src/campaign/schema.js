@@ -47,6 +47,7 @@ type TargetAudience {
   age_range:[Int]!
   locations: [String]!
   interests: [String]
+  KeyWords: [String]
 }
 
 enum Language {

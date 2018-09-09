@@ -13,6 +13,8 @@ class Container extends Component {
   }
 
   render () {
+    if (store.error) return (<h1>Error Loading</h1>)
+    if (!store.hasData) return (<h3>Loading...</h3>)
     return (<Platform platform={store.platform} />)
   }
 }

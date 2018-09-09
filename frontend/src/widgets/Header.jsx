@@ -17,7 +17,7 @@ const Wrapper = styled.header`
 
 function Header () {
   return (<Wrapper>
-    <Title>Campaign List</Title>
+    <Title>Nanos.ai Assessment</Title>
   </Wrapper>)
 }
 

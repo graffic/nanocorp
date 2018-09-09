@@ -2,10 +2,14 @@ import { observable } from 'mobx'
 import client from '../client'
 
 class Store {
-  @observable platform = {}
+  @observable platform = { }
   @observable error = false
+  @observable hasData = false
 
   get (campaignId, platformType) {
+    this.hasData = false
+    this.error = false
+
     return client.request(`
 query Campaign($campaignId: Int!, $platformType: PlatformType!) {
   campaign(id: $campaignId) {
@@ -22,6 +26,7 @@ query Campaign($campaignId: Int!, $platformType: PlatformType!) {
         age_range
         locations
         interests
+        KeyWords
       }
       creatives {
         headers
@@ -32,6 +37,7 @@ query Campaign($campaignId: Int!, $platformType: PlatformType!) {
       insights{
         impressions
         clicks
+        website_visits
         nanos_score
         cost_per_click
         click_through_rate
@@ -41,8 +47,13 @@ query Campaign($campaignId: Int!, $platformType: PlatformType!) {
     }
   }
 }`, { campaignId, platformType })
-      .then(({ campaign: { platform } }) => { this.platform = platform })
-      .catch(() => { this.error = true })
+      .then(({ campaign: { platform } }) => {
+        this.platform = platform
+        this.hasData = true
+      })
+      .catch(() => {
+        this.error = true
+      })
   }
 }
 

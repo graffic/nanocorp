@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders 1`] = `
+<div>
+  <Link
+    replace={false}
+    to="/"
+  >
+    &lt; Back to campaign list
+  </Link>
+  <React.Fragment>
+    <h1>
+      Platform: 
+    </h1>
+    <ul>
+      <li>
+        Status: 
+        Delivering
+      </li>
+      <li>
+        Total budget: 
+        40
+      </li>
+      <li>
+        Remaining budget: 
+        12
+      </li>
+      <li>
+        Start: 
+        Mon, 02 Jul 2018 22:00:00 GMT
+      </li>
+      <li>
+        End: 
+        Sun, 29 Jul 2018 22:00:00 GMT
+      </li>
+    </ul>
+  </React.Fragment>
+  <React.Fragment>
+    <h2>
+      Target Audience
+    </h2>
+    <ul>
+      <li>
+        Languages: 
+        FR, EN, DE
+      </li>
+      <li>
+        Genders: 
+        M, F
+      </li>
+      <li>
+        Age range: 
+        20
+         to 
+        20
+      </li>
+      <li>
+        Locations: 
+        France, Germany
+      </li>
+      <li>
+        Interests: 
+        Docker, Kubernates
+      </li>
+      <li>
+        Keywords: 
+        --
+      </li>
+    </ul>
+  </React.Fragment>
+  <React.Fragment>
+    <h2>
+      Creatives
+    </h2>
+    <ul>
+      <li>
+        Headers: 
+        --
+      </li>
+      <li>
+        Description: 
+        DOP SuperHero is where all DevOps is going to happen in the future, join the revolution today!
+      </li>
+      <li>
+        <img
+          src="undefinedimg1.jpg"
+        />
+      </li>
+    </ul>
+  </React.Fragment>
+  <React.Fragment>
+    <h2>
+      Insights
+    </h2>
+    <ul>
+      <li>
+        Impressions: 
+        4503
+      </li>
+      <li>
+        Clicks: 
+        328
+      </li>
+      <li>
+        Website visits: 
+      </li>
+      <li>
+        Nanos score: 
+        5.7
+      </li>
+      <li>
+        CPC: 
+        0.88
+      </li>
+      <li>
+        CTR: 
+        0.09
+      </li>
+      <li>
+        KPI 1: 
+        44.5
+      </li>
+      <li>
+        KPI 2: 
+        0.0023
+      </li>
+    </ul>
+  </React.Fragment>
+</div>
+`;
