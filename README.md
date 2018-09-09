@@ -17,6 +17,18 @@ Let's continue explaining each one of these sections: frontend, backend, db, end
 * NodeJS `10.9.0` and yarn are required to run the application in development mode.
 * Docker and docker-compose to run backend service tests and end to end tests.
 
+### Quick start
+
+* Build and Run with docker compose:
+  * From the root directory `docker-compose up --build`
+  * Direct a broswer to [http://localhost:8080](http://localhost:8080)
+* Run in development mode:
+  * In the `db` directory, run: `make build run`
+  * In the `backend` directory, run: `yarn && yarn start`
+  * In the `frontend` directory, run: `yarn && yarn start`
+* Deploy to kubernetes:
+  * In the `deploy` directory, run: `kubectl apply -f config.yml`
+
 ## Frontend
 
 It is a single page application built on top of react and using mobx for state management. It is ocated in the `frontend` directory. 
