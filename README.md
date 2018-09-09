@@ -126,3 +126,25 @@ To run the tests, it uses a compose file with the frontend, backend, and databas
 3. Install dependencies with `yarn`
 4. Run tests: `yarn cypress:run`
 
+## Automation and Deployment
+
+Tests and deployment are automated via [travis-ci](https://travis-ci.org/graffic/nanocorp). It runs: frontend tests, backend tests and end to end thanks to travis ability to launch other containers.
+
+After running tests, it builds two docker images: one for the backend and frontend called **app** and another one for the database called **db**. They are published on [docker hub](https://hub.docker.com/r/graffic/nanocorp/tags/)
+
+The last step is deployment (Check the `deploy` directory). This application is deployed in Google Cloud using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) with two pods (each pod with app and db containers) and a load balancer. After deploying the new images, the process empties cloudflare's caches.
+
+### Why kubernetes?
+
+Containers are very easy to deploy and google was giving $300 USD in credits for Google Cloud. So it was a no brainer.
+
+On one side the containers used in e2e tests are the same dockerfiles that run in production. So it helps a lot being able to reproduce the environment. The other side was that it was a it difficult to automate the `gcloud`/`kubectl` process.
+
+### Infrastructure summary
+
+* Github for code
+* Travis CI for automation.
+* Docker hub as a container registry
+* Google Cloud for Kubernetes.
+* Cloudflare for CDN.
+* GoDaddy for a cheap $1 USD domain.
