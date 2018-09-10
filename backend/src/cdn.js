@@ -10,6 +10,10 @@ const mount = require('koa-mount')
 const config = require('./config')
 
 module.exports = {
+  /**
+   * Applies conditioan, etag and staticFiles on '/cdn'
+   * @param {Koa} app The koa app to apply the middleware to
+   */
   applyMiddleware (app) {
     const composed = compose([
       conditional(),

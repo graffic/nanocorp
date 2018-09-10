@@ -44,6 +44,10 @@ const Table = styled.table`
 
 const store = new Store()
 
+/**
+ * Shows a table with the list of campaigns and
+ * coordinates the retrieval on mount
+ */
 @observer
 class CampaignList extends Component {
   componentWillMount () {

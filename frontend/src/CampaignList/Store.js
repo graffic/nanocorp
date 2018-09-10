@@ -1,10 +1,17 @@
 import { observable } from 'mobx'
 import client from '../client'
 
+/**
+ * Handles the retrieval of the campaign list
+ */
 class Store {
   @observable campaigns = []
   @observable error = false
 
+  /**
+   * Gets all campaings
+   * @returns {Promise}
+   */
   get () {
     return client.request(`{
       campaigns {

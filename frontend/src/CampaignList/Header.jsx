@@ -9,6 +9,9 @@ function toSlug (name) {
   return name.toLowerCase().replace(' ', '_')
 }
 
+/**
+ * Campaign list table header
+ */
 const Header = () => {
   const tds = entries.map((e) => {
     const slug = toSlug(e)

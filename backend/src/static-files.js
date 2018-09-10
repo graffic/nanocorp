@@ -8,6 +8,10 @@ const staticFiles = require('koa-static')
 const config = require('./config')
 
 module.exports = {
+  /**
+   * Applies conditional, etag, staticFiles and fallback on index.html
+   * @param {Koa} app The koa app to apply the middleware to
+   */
   applyMiddleware (app) {
     app.use(conditional())
     app.use(etag())

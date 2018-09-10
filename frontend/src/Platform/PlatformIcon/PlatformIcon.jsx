@@ -24,7 +24,12 @@ const big = `
 const StyledImg = styled.img`
     ${props => props.small ? small : big}
 `
-
+/**
+ * Nice platform icon: google, facebook, instagram or unknown
+ * @param {Object} props Object props
+ * @param {boolean} small Should the icon be small?
+ * @param {string} platform Name of the platform
+ */
 const PlatformIcon = ({ small, platform }) => (<StyledImg small={small} src={getSrc(platform)} />)
 
 export default PlatformIcon

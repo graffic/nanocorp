@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 import { observer } from 'mobx-react'
 
+/**
+ * Converts a timestamp in milliseconds to UTC date string
+ * @param {number} ts timestamp in milliseconds
+ * @return {string}
+ */
 const toDate = (ts) => (new Date(ts)).toUTCString()
 
 const platformInfo = (platform) =>
@@ -61,6 +66,9 @@ const insights = (insights) =>
     </ul>
   </>
 
+/**
+ * Platform information component
+ */
 const Platform = observer(({ platform }) => (
   <div>
     <Link to='/'>&lt; Back to campaign list</Link>

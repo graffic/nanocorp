@@ -5,6 +5,10 @@ import { observer } from 'mobx-react'
 
 const store = new Store()
 
+/**
+ * Handles the retrieval of a platform when the component is mounted,
+ * plus errors and loading screen.
+ */
 @observer
 class Container extends Component {
   componentDidMount () {

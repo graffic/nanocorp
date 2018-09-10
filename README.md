@@ -5,9 +5,9 @@ You can access the application here: https://nanos-assessment.com
 
 ## Introduction
 
-This application answers the [nanos.ai](http://nanos.ai) [fullstack assesment project](https://github.com/nanosapp/fullstack-dev-assesment) using JavaScript (NodeJS and browser), MongoDB and Google Cloud. At the same time it shows most of the points I consider important in an application: not only code and tests but also continuous integration and deployment using travis and google cloud.
+This application answers the [nanos.ai](http://nanos.ai) [fullstack assessment project](https://github.com/nanosapp/fullstack-dev-assesment) using JavaScript (NodeJS and browser), MongoDB and Google Cloud. At the same time, it shows most of the points I consider important in an application: not only code and tests but also continuous integration and deployment.
 
-Given that I was going to give this technical assessment some time, I decided to learn also something new. I will point out during this document which parts were new and my take on them.
+Given that I was going to spend some time on this assessment, I decided to also learn something new. I will point out during this document which parts were new and my take on them.
 
 Let's continue explaining each one of these sections: frontend, backend, db, end to end tests, and deployment. 
 
@@ -25,12 +25,12 @@ Let's continue explaining each one of these sections: frontend, backend, db, end
   * In the `db` directory, run: `make build run`
   * In the `backend` directory, run: `yarn && yarn start`
   * In the `frontend` directory, run: `yarn && yarn start`
-* Deploy to kubernetes:
+* Deploy to kubernetes (you need a confitured `kubectl`):
   * In the `deploy` directory, run: `kubectl apply -f config.yml`
 
 ## Frontend
 
-It is a single page application built on top of react and using mobx for state management. It is ocated in the `frontend` directory. 
+It is a single page application built on top of react and using mobx for state management. It is located in the `frontend` directory. 
 
 Quick start (from `frontend`):
 
@@ -40,9 +40,9 @@ Quick start (from `frontend`):
 
 ### Rationale
 
-The frontend was built to consume data from the backend API. Usually in dashboards and applications managing data I tend to prefer SPAs over server side rendered. Files are structured by page plus the root `src` folder having some utilities.
+The frontend was built to consume data from the backend API. Usually in dashboards and applications managing data I tend to prefer SPAs over server side rendered. Although in this case the amount of data was small. [React](https://reactjs.org) was chosen due to it's versatility. I paid a bit the price of being able to choose react companion libraries instead of using `create-react-app`, but I learned more about how `webpack` and the `babel` pipeline.
 
-[React](https://reactjs.org) was chosen due to it's versatility. I paid a bit the price of being able to choose react companion libraries instead of using `create-react-app`, but I learned more about how `webpack` and the `babel` pipeline.
+Files are structured by page plus the root `src` folder having some utilities. I like to organize code by business functionality and then in the last directory (leave) get into more technical naming like: container, stores and differente components.
 
 Besides React, [mobx](https://mobx.js.org) was added for state management using stores like in a [flux architecture](https://facebook.github.io/flux/) but with the benefits of observables instead of actions and dispatchers. I haven't used mobx before, and I like how it eliminates the need of `setState` and groups the access to specific domain entities.
 
@@ -60,7 +60,7 @@ The idea was to show something, but keep the entire app working. So tests do not
 
 #### Other
 
-**Code style** is enforced using the [standardjs](https://standardjs.com) style guide. I had to choose one, and lately I like that one a lot.
+**Code style** is enforced using the [standardjs](https://standardjs.com) style guide. I had to choose one, and lately I like that one a lot. This is also enforced in the backend.
 
 **Backend communication** is done using [graphql-request](https://github.com/prisma/graphql-request). I'll explain why GraphQL in the backend section.
 
@@ -143,13 +143,13 @@ Tests and deployment are automated via [travis-ci](https://travis-ci.org/graffic
 
 After running tests, it builds two docker images: one for the backend and frontend called **app** and another one for the database called **db**. They are published on [docker hub](https://hub.docker.com/r/graffic/nanocorp/tags/)
 
-The last step is deployment (Check the `deploy` directory). This application is deployed in Google Cloud using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) with two pods (each pod with app and db containers) and a load balancer. After deploying the new images, the process empties cloudflare's caches.
+The last step is deployment (Check the `deploy` directory). This application is deployed in Google Cloud using [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) with two pods (each pod with app and db containers) and a load balancer. After deploying the new images, the process empties Cloudflare's cache.
 
 ### Why kubernetes?
 
-Containers are very easy to deploy and google was giving $300 USD in credits for Google Cloud. So it was a no brainer.
+Containers are very easy to deploy and google was giving $300 USD in credits for Google Cloud. It was a no-brainer to get a cluster with 2 nodes an one external IP.
 
-On one side the containers used in e2e tests are the same dockerfiles that run in production. So it helps a lot being able to reproduce the environment. The other side was that it was a it difficult to automate the `gcloud`/`kubectl` process.
+On one side the containers used in e2e tests are the same Docker files that run in production. It helps a lot being able to reproduce the environment. The other side was that it was a it difficult to automate the `gcloud`/`kubectl` process.
 
 ### Infrastructure summary
 
@@ -157,6 +157,6 @@ On one side the containers used in e2e tests are the same dockerfiles that run i
 * Travis CI for automation.
 * Coveralls for coverage.
 * Docker hub as a container registry.
-* Google Cloud for Kubernetes.
+* Google Cloud for GKE (Kubernetes).
 * Cloudflare for CDN and SSL.
-* GoDaddy for a cheap $1 USD domain.
+* GoDaddy for a cheap $1 USD domain name.

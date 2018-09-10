@@ -1,11 +1,23 @@
 import { observable } from 'mobx'
 import client from '../client'
 
+/**
+ * Handles the retrieval of a specific platform in a campagin
+ */
 class Store {
+  /** Platform retrieved */
   @observable platform = { }
+  /** Was there any error during retrieval? */
   @observable error = false
+  /** Have we retrieved any data? */
   @observable hasData = false
 
+  /**
+   * Gets the specific platform
+   * @param {number} campaignId which campagin
+   * @param {string} platformType platform type
+   * @returns {Promise}
+   */
   get (campaignId, platformType) {
     this.hasData = false
     this.error = false
