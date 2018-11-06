@@ -1,7 +1,7 @@
 # FullStack assessment for Nanos.ai.
 [![Build Status](https://travis-ci.org/graffic/nanocorp.svg?branch=master)](https://travis-ci.org/graffic/nanocorp) [![Coverage Status](https://coveralls.io/repos/github/graffic/nanocorp/badge.svg?branch=master)](https://coveralls.io/github/graffic/nanocorp?branch=master)
 
-You can access the application here: https://nanos-assessment.com
+Deployment on GC K8S disabled. You used to be able to access the app here: https://nanos-assessment.com
 
 ## Introduction
 
